@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ministry of Single — โสดไม่ใช่ห้องรอ มันคือจุดหมาย</title>
+  <meta name="description" content="Ministry of Single คือ ecosystem สำหรับคนโสดที่ใช้ชีวิตเต็มที่ Content | Community | Deals | Events" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0a0f1e;
+      --navy-mid: #111827;
+      --navy-light: #1e2a3a;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --white: #f8f5ef;
+      --white-dim: rgba(248,245,239,0.6);
+      --white-faint: rgba(248,245,239,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,15,30,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+
+    .nav-cta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 8rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Gold gradient orb */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -10%;
+      top: 10%;
+      width: 60vw;
+      height: 60vw;
+      max-width: 700px;
+      max-height: 700px;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.04) 40%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.7; }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-eyebrow span {
+      display: inline-block;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--gold);
+      vertical-align: middle;
+      margin-right: 0.75rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      max-width: 14ch;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-title .line-block {
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: var(--white-dim);
+      max-width: 45ch;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.6s;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.3);
+    }
+
+    .btn-secondary {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid rgba(248,245,239,0.25);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.2s;
+    }
+
+    .scroll-line {
+      width: 2rem;
+      height: 1px;
+      background: var(--white-dim);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gold);
+      animation: scrollSlide 2s ease infinite 1.5s;
+    }
+
+    @keyframes scrollSlide {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* ── STATS TICKER ── */
+    .stats-bar {
+      background: var(--navy-light);
+      border-top: 1px solid rgba(201,168,76,0.2);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1.25rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 5rem;
+      animation: ticker 25s linear infinite;
+      width: max-content;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ticker-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .ticker-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── MANIFESTO SECTION ── */
+    .manifesto {
+      padding: 8rem 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .manifesto-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .manifesto-text .highlight {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .manifesto-text p {
+      margin-bottom: 1.5rem;
+    }
+
+    .manifesto-sign {
+      margin-top: 3rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .manifesto-sign::before {
+      content: '';
+      display: block;
+      width: 3rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* ── ECOSYSTEM ── */
+    .ecosystem {
+      padding: 6rem 2.5rem;
+      background: var(--navy-mid);
+      border-top: 1px solid var(--white-faint);
+    }
+
+    .ecosystem-header {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .ecosystem-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      max-width: 18ch;
+      line-height: 1.2;
+    }
+
+    .ecosystem-sub {
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      max-width: 30ch;
+      line-height: 1.6;
+      text-align: right;
+    }
+
+    .ecosystem-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: rgba(201,168,76,0.15);
+      border: 1.5px solid rgba(201,168,76,0.15);
+    }
+
+    .eco-card {
+      background: var(--navy-mid);
+      padding: 2.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .eco-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.4s ease;
+    }
+
+    .eco-card:hover { background: var(--navy-light); }
+    .eco-card:hover::before { width: 100%; }
+
+    .eco-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--gold-dim);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .eco-card:hover .eco-num { color: rgba(201,168,76,0.35); }
+
+    .eco-domain {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .eco-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .eco-desc {
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .eco-arrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+
+    .eco-card:hover .eco-arrow { gap: 1rem; }
+
+    /* ── CONTENT PREVIEW ── */
+    .content-section {
+      padding: 8rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .content-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+    }
+
+    .see-all {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+
+    .see-all:hover { gap: 1rem; }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1.5px;
+      background: var(--white-faint);
+      border: 1.5px solid var(--white-faint);
+    }
+
+    .article-card {
+      background: var(--navy);
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+    }
+
+    .article-card.featured { min-height: 380px; }
+    .article-card:hover { background: var(--navy-light); }
+
+    .article-cat {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      flex-grow: 1;
+    }
+
+    .article-card.featured .article-title {
+      font-size: 1.8rem;
+    }
+
+    .article-meta {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: var(--white-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── JOIN SECTION ── */
+    .join-section {
+      padding: 8rem 2.5rem;
+      background: var(--navy-light);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .join-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .join-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .join-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      max-width: 14ch;
+      margin: 0 auto 1.5rem;
+    }
+
+    .join-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .join-sub {
+      font-size: 1rem;
+      color: var(--white-dim);
+      max-width: 40ch;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    .join-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .join-input {
+      flex: 1;
+      background: rgba(248,245,239,0.06);
+      border: 1px solid rgba(248,245,239,0.15);
+      border-right: none;
+      padding: 1rem 1.5rem;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .join-input::placeholder { color: var(--white-dim); }
+    .join-input:focus { border-color: var(--gold); }
+
+    .join-btn {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      padding: 1rem 1.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .join-btn:hover { background: var(--gold-light); }
+
+    .join-note {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: var(--white-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 3rem 2.5rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      color: rgba(248,245,239,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.25rem 4rem; }
+      .manifesto { padding: 5rem 1.25rem; }
+      .ecosystem { padding: 4rem 1.25rem; }
+      .ecosystem-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .ecosystem-sub { text-align: left; }
+      .content-section { padding: 5rem 1.25rem; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .join-section { padding: 5rem 1.25rem; }
+      .join-form { flex-direction: column; }
+      .join-input { border-right: 1px solid rgba(248,245,239,0.15); border-bottom: none; }
+      footer { padding: 2rem 1.25rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Ministry of Single</a>
+    <ul class="nav-links">
+      <li><a href="#manifesto">Manifesto</a></li>
+      <li><a href="#ecosystem">Ecosystem</a></li>
+      <li><a href="#content">Content</a></li>
+      <li><a href="#join">Join</a></li>
+    </ul>
+    <a class="nav-cta" href="#join">Join Free</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow"><span></span>The Ministry Has Spoken</div>
+    <h1 class="hero-title">
+      <span class="line-block">โสดไม่ใช่</span>
+      <span class="line-block">ห้องรอ</span>
+      <span class="line-block"><em>มันคือจุดหมาย</em></span>
+    </h1>
+    <p class="hero-subtitle">
+      Ministry of Single คือ ecosystem สำหรับคนโสดที่ใช้ชีวิตเต็มที่<br>
+      Content · Community · Deals · Events — ที่เดียวที่เข้าใจคุณจริงๆ
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#join">เข้าร่วมฟรี</a>
+      <a class="btn-secondary" href="#manifesto">อ่าน Manifesto</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- STATS TICKER -->
+  <div class="stats-bar">
+    <div class="ticker-track" id="ticker">
+      <div class="ticker-item">
+        <span class="ticker-num">10M+</span>
+        <span class="ticker-label">คนโสดในไทย</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">42%</span>
+        <span class="ticker-label">คนรุ่นใหม่เลือกโสด</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">3x</span>
+        <span class="ticker-label">Solo travel เติบโตใน 5 ปี</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">Single Economy</span>
+        <span class="ticker-label">กำลังเปลี่ยนโลก</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">1 Wallet</span>
+        <span class="ticker-label">รองรับทุก Transaction</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <!-- Duplicate for infinite loop -->
+      <div class="ticker-item">
+        <span class="ticker-num">10M+</span>
+        <span class="ticker-label">คนโสดในไทย</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">42%</span>
+        <span class="ticker-label">คนรุ่นใหม่เลือกโสด</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">3x</span>
+        <span class="ticker-label">Solo travel เติบโตใน 5 ปี</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">Single Economy</span>
+        <span class="ticker-label">กำลังเปลี่ยนโลก</span>
+      </div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item">
+        <span class="ticker-num">1 Wallet</span>
+        <span class="ticker-label">รองรับทุก Transaction</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto reveal" id="manifesto">
+    <div class="section-label">Our Manifesto</div>
+    <div class="manifesto-text">
+      <p>คนโสดถูกมองว่ากำลัง<span class="highlight">รอบางอย่าง</span><br>
+      รอใคร รอเวลา รอให้ชีวิต "เริ่มต้น"</p>
+
+      <p>แต่เราไม่เชื่อแบบนั้น</p>
+
+      <p>คนโสดกำลังเพิ่มขึ้นทุกปี<br>
+      ไม่ใช่เพราะล้มเหลว<br>
+      ไม่ใช่เพราะยังหาไม่เจอ<br>
+      แต่เพราะพวกเขา <span class="highlight">เลือก</span></p>
+
+      <p>เราสร้าง Ministry of Single<br>
+      เพื่อคนที่รู้ว่า<span class="highlight"> ตอนนี้ — พวกเขาสมบูรณ์แล้ว</span></p>
+    </div>
+    <div class="manifesto-sign">The Ministry of Single</div>
+  </section>
+
+  <!-- ECOSYSTEM -->
+  <section class="ecosystem reveal" id="ecosystem">
+    <div class="ecosystem-header">
+      <h2 class="ecosystem-title">The Single<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--gold)">Ecosystem</em></h2>
+      <p class="ecosystem-sub">ทุก property เชื่อมกันอยู่<br>One login. One wallet. One world.</p>
+    </div>
+    <div class="ecosystem-grid">
+      <a class="eco-card" href="https://ministryofsingle.com">
+        <div>
+          <div class="eco-num">01</div>
+          <div class="eco-domain">ministryofsingle.com</div>
+          <div class="eco-name">Ministry of Single</div>
+          <div class="eco-desc">HQ · Brand · Media · Thought Leadership<br>ศูนย์กลางของ ecosystem ทั้งหมด</div>
+        </div>
+        <div class="eco-arrow">You are here →</div>
+      </a>
+      <a class="eco-card" href="https://whatsinglewant.com">
+        <div>
+          <div class="eco-num">02</div>
+          <div class="eco-domain">whatsinglewant.com</div>
+          <div class="eco-name">What Single Want</div>
+          <div class="eco-desc">Insight · Content · Deals · Marketplace<br>Daily utility hub สำหรับคนโสด</div>
+        </div>
+        <div class="eco-arrow">Explore →</div>
+      </a>
+      <a class="eco-card" href="https://singleexpo.com">
+        <div>
+          <div class="eco-num">03</div>
+          <div class="eco-domain">singleexpo.com</div>
+          <div class="eco-name">Single Expo</div>
+          <div class="eco-desc">Events · Expo · Community<br>Flagship event ของคนโสดไทย</div>
+        </div>
+        <div class="eco-arrow">See Event →</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTENT PREVIEW -->
+  <section class="content-section reveal" id="content">
+    <div class="content-header">
+      <h2 class="content-title">From<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--gold)">the Ministry</em></h2>
+      <a class="see-all" href="#">All Articles →</a>
+    </div>
+    <div class="articles-grid">
+      <a class="article-card featured" href="#">
+        <div>
+          <div class="article-cat">Manifesto</div>
+          <div class="article-title">ทำไมคนโสดถึงไม่ใช่คนที่ยังหาคู่ไม่ได้ — และทำไมเราถึงเชื่อแบบนั้น</div>
+        </div>
+        <div class="article-meta">Ministry of Single · Feature</div>
+      </a>
+      <a class="article-card" href="#">
+        <div>
+          <div class="article-cat">Solo Travel</div>
+          <div class="article-title">เริ่มเดินทางคนเดียวครั้งแรก ไม่ต้องกลัว</div>
+        </div>
+        <div class="article-meta">Travel · 5 min read</div>
+      </a>
+      <a class="article-card" href="#">
+        <div>
+          <div class="article-cat">Money</div>
+          <div class="article-title">คนโสดบริหารเงินยังไงให้รวยเร็วกว่า</div>
+        </div>
+        <div class="article-meta">Finance · 4 min read</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section class="join-section reveal" id="join">
+    <div class="join-label">Join the Ministry</div>
+    <h2 class="join-title">This is your<br><em>government now</em></h2>
+    <p class="join-sub">เข้าร่วมฟรี รับ content, deals และ updates จาก Single Ecosystem ก่อนใคร</p>
+    <div class="join-form">
+      <input class="join-input" type="email" placeholder="อีเมลของคุณ" />
+      <button class="join-btn">Join Free</button>
+    </div>
+    <p class="join-note">ฟรีตลอด · ไม่มีสแปม · ออกได้ตลอดเวลา</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Ministry of Single</div>
+      <ul class="footer-links">
+        <li><a href="https://whatsinglewant.com">What Single Want</a></li>
+        <li><a href="https://singleexpo.com">Single Expo</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="footer-copy">© 2025 Ministry of Single · Part of Single Ecosystem</div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Join form
+    document.querySelector('.join-btn').addEventListener('click', () => {
+      const input = document.querySelector('.join-input');
+      if (input.value && input.value.includes('@')) {
+        input.value = '';
+        input.placeholder = '✓ ยินดีต้อนรับสู่ Ministry!';
+        input.style.borderColor = 'var(--gold)';
+      } else {
+        input.style.borderColor = '#c0392b';
+        input.placeholder = 'กรุณากรอกอีเมลที่ถูกต้อง';
+      }
+    });
+  </script>
+</body>
+</html>
