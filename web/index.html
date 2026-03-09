@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Ministry of Single — โสดไม่ใช่ห้องรอ มันคือจุดหมาย</title>
+  <meta name="description" content="Ministry of Single คือ ecosystem สำหรับคนโสดที่ใช้ชีวิตเต็มที่ Content | Community | Deals | Events" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ministryofsingle.com/" />
+  <meta property="og:title" content="Ministry of Single — โสดไม่ใช่ห้องรอ มันคือจุดหมาย" />
+  <meta property="og:description" content="Ecosystem สำหรับคนโสดที่ใช้ชีวิตเต็มที่ Content · Community · Deals · Events" />
+  <meta property="og:locale" content="th_TH" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1A1A2E;
+      --navy-mid: #252B47;
+      --navy-light: #2C3E5F;
+      --gold: #F4A261;
+      --gold-light: #F5B380;
+      --gold-dim: rgba(244, 162, 97, 0.15);
+      --accent-red: #E63946;
+      --cream: #F8F4EF;
+      --cream-dim: rgba(248, 244, 239, 0.6);
+      --cream-faint: rgba(248, 244, 239, 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    nav.scrolled {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(244, 162, 97, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      padding: 0.75rem 2.5rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 32px;
+      height: 32px;
+    }
+
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      padding: 0.7rem 1.6rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 9999px;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(244, 162, 97, 0.3);
+    }
+
+    /* Hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      z-index: 10;
+    }
+
+    .nav-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      transition: all 0.3s ease;
+    }
+
+    .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(10px); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-10px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 0 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      left: -5%;
+      top: 20%;
+      width: 40vw;
+      height: 40vw;
+      max-width: 500px;
+      max-height: 500px;
+      background: radial-gradient(ellipse, rgba(230, 57, 70, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-30px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-top: 5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow span {
+      display: inline-block;
+      width: 2.5rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      max-width: 14ch;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    .hero-title .line-block { display: block; }
+
+    .hero-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      font-weight: 300;
+      color: var(--cream-dim);
+      max-width: 40ch;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.6s;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(244, 162, 97, 0.2);
+      min-height: 44px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(244, 162, 97, 0.4);
+    }
+
+    .btn-secondary {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      border: 2px solid rgba(244, 162, 97, 0.3);
+      padding: 0.9rem 2.4rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 9999px;
+      background: transparent;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+      background: rgba(244, 162, 97, 0.08);
+    }
+
+    /* Hero Image */
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 0.5s;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      max-height: 75vh;
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) contrast(1.1);
+    }
+
+    .hero-image-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(26,26,46,0.2) 0%, rgba(26,26,46,0.6) 100%);
+      pointer-events: none;
+    }
+
+    .hero-image-caption {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      z-index: 3;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--cream);
+      opacity: 0.9;
+    }
+
+    .hero-image-tag {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 3;
+      background: rgba(244, 162, 97, 0.9);
+      color: var(--navy);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+    }
+
+    /* ── STATS TICKER ── */
+    .stats-bar {
+      background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-mid) 100%);
+      border-top: 1px solid rgba(244, 162, 97, 0.2);
+      border-bottom: 1px solid rgba(244, 162, 97, 0.2);
+      padding: 1.5rem 0;
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 5rem;
+      animation: ticker 25s linear infinite;
+      width: max-content;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ticker-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .ticker-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto {
+      padding: 8rem 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    }
+
+    .manifesto-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .manifesto-text .highlight {
+      color: var(--gold);
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    .manifesto-text p { margin-bottom: 1.5rem; }
+
+    .manifesto-sign {
+      margin-top: 3rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .manifesto-sign::before {
+      content: '';
+      display: block;
+      width: 3rem;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    /* ── FULL-BLEED IMAGE BREAK ── */
+    .image-break {
+      width: 100%;
+      height: 50vh;
+      min-height: 350px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-break img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-break::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(26,26,46,0.4) 0%, rgba(26,26,46,0.7) 100%);
+    }
+
+    .image-break-text {
+      position: absolute;
+      bottom: 3rem;
+      left: 2.5rem;
+      right: 2.5rem;
+      z-index: 2;
+    }
+
+    .image-break-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--cream);
+      max-width: 30ch;
+      line-height: 1.4;
+    }
+
+    .image-break-attr {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── ECOSYSTEM ── */
+    .ecosystem {
+      padding: 6rem 2.5rem;
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+      border-top: 1px solid rgba(244, 162, 97, 0.15);
+      position: relative;
+    }
+
+    .ecosystem-header {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .ecosystem-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      max-width: 18ch;
+      line-height: 1.2;
+    }
+
+    .ecosystem-sub {
+      font-size: 0.85rem;
+      color: var(--cream-dim);
+      max-width: 30ch;
+      line-height: 1.6;
+      text-align: right;
+    }
+
+    .ecosystem-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(244, 162, 97, 0.12);
+      border: 1.5px solid rgba(244, 162, 97, 0.15);
+    }
+
+    .eco-card {
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+      padding: 2.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+    }
+
+    .eco-card-img {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .eco-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .eco-card:hover .eco-card-img img {
+      opacity: 0.15;
+    }
+
+    .eco-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .eco-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .eco-card:hover::before { width: 100%; }
+
+    .eco-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--gold-dim);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eco-domain {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eco-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eco-desc {
+      font-size: 0.85rem;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eco-arrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eco-card:hover .eco-arrow { gap: 1rem; }
+
+    /* ── SOCIAL PROOF ── */
+    .social-proof {
+      padding: 4rem 2.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(244, 162, 97, 0.1);
+      border-bottom: 1px solid rgba(244, 162, 97, 0.1);
+    }
+
+    .proof-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      margin-bottom: 2rem;
+    }
+
+    .proof-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      opacity: 0.4;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .proof-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(248, 244, 239, 0.1);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .proof-logo:hover {
+      opacity: 1;
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── CONTENT / ARTICLES ── */
+    .content-section {
+      padding: 8rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .content-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+    }
+
+    .see-all {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+
+    .see-all:hover { gap: 1rem; }
+
+    /* Asymmetric article layout */
+    .articles-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.5rem;
+    }
+
+    .article-card {
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+      border: 1px solid rgba(244, 162, 97, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(244, 162, 97, 0.2);
+    }
+
+    .article-card.featured {
+      grid-row: span 2;
+    }
+
+    .article-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      filter: brightness(0.8) contrast(1.1);
+    }
+
+    .article-card.featured .article-img {
+      aspect-ratio: 3/4;
+      flex: 1;
+    }
+
+    .article-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .article-cat {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.3;
+      flex-grow: 1;
+    }
+
+    .article-card.featured .article-title {
+      font-size: 1.5rem;
+    }
+
+    .article-meta {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: var(--cream-dim);
+    }
+
+    /* ── SINGLE STAT (Shareable) ── */
+    .stat-highlight {
+      padding: 6rem 2.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-mid) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-highlight::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(244, 162, 97, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .stat-card {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--accent-red) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .stat-desc {
+      font-size: 1.1rem;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      max-width: 40ch;
+      margin: 0 auto 2rem;
+    }
+
+    .stat-source {
+      font-size: 0.65rem;
+      color: rgba(248, 244, 239, 0.3);
+      letter-spacing: 0.1em;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(244, 162, 97, 0.3);
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .share-btn:hover {
+      background: rgba(244, 162, 97, 0.1);
+      border-color: var(--gold);
+    }
+
+    /* ── JOIN / CTA ── */
+    .join-section {
+      padding: 8rem 2.5rem;
+      background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-mid) 100%);
+      border-top: 1px solid rgba(244, 162, 97, 0.15);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .join-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(ellipse, rgba(244, 162, 97, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .join-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .join-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      max-width: 16ch;
+      margin: 0 auto 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .join-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .join-value {
+      font-size: 0.85rem;
+      color: var(--cream-dim);
+      max-width: 50ch;
+      margin: 0 auto 1rem;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .join-perks {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .join-perk {
+      font-size: 0.75rem;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .join-perk::before {
+      content: '✓';
+      font-weight: 700;
+    }
+
+    .join-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 16px 40px rgba(244, 162, 97, 0.15);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .join-input {
+      flex: 1;
+      background: rgba(248, 244, 239, 0.08);
+      border: 1px solid rgba(248, 244, 239, 0.15);
+      border-right: none;
+      padding: 1rem 1.5rem;
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .join-input::placeholder { color: var(--cream-dim); }
+    .join-input:focus {
+      border-color: var(--gold);
+      background: rgba(248, 244, 239, 0.12);
+    }
+
+    .join-btn {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--navy);
+      border: none;
+      padding: 1rem 1.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      min-height: 44px;
+    }
+
+    .join-btn:hover {
+      box-shadow: 0 8px 20px rgba(244, 162, 97, 0.3);
+    }
+
+    .join-note {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: var(--cream-dim);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: linear-gradient(135deg, var(--navy) 0%, #0f1419 100%);
+      border-top: 1px solid rgba(244, 162, 97, 0.15);
+      padding: 3rem 2.5rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      color: rgba(248, 244, 239, 0.3);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      nav.scrolled { padding: 0.75rem 1.25rem; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(26, 26, 46, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 2rem 1.25rem;
+        gap: 1.5rem;
+        border-bottom: 1px solid rgba(244, 162, 97, 0.2);
+      }
+
+      .nav-links.active { display: flex; }
+      .nav-toggle { display: flex; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 6rem 1.25rem 3rem;
+        min-height: auto;
+      }
+
+      .hero-visual { order: -1; }
+
+      .hero-image-wrapper {
+        aspect-ratio: 4/3;
+        max-height: 40vh;
+      }
+
+      .manifesto { padding: 5rem 1.25rem; }
+
+      .image-break { height: 35vh; min-height: 250px; }
+      .image-break-quote { font-size: 1.2rem; }
+
+      .ecosystem { padding: 4rem 1.25rem; }
+      .ecosystem-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .ecosystem-sub { text-align: left; }
+      .ecosystem-grid { grid-template-columns: 1fr; }
+
+      .social-proof { padding: 3rem 1.25rem; }
+      .proof-logos { gap: 1rem; }
+
+      .content-section { padding: 5rem 1.25rem; }
+      .articles-layout { grid-template-columns: 1fr; }
+      .article-card.featured { grid-row: auto; }
+
+      .stat-highlight { padding: 5rem 1.25rem; }
+
+      .join-section { padding: 5rem 1.25rem; }
+      .join-form { flex-direction: column; border-radius: 12px; }
+      .join-input { border-right: none; border-bottom: 1px solid rgba(248, 244, 239, 0.15); }
+      .join-perks { flex-direction: column; gap: 0.75rem; }
+
+      footer { padding: 2rem 1.25rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title .line-block { font-size: clamp(2rem, 8vw, 3rem); }
+      .hero-subtitle { font-size: 0.95rem; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; justify-content: center; }
+
+      .manifesto-text p { font-size: clamp(1.2rem, 4vw, 1.8rem); }
+
+      .image-break { height: 25vh; min-height: 200px; }
+      .image-break-quote { font-size: 1rem; padding: 0 1rem; }
+
+      .eco-card { padding: 1.5rem; }
+
+      .stat-highlight .stat-big { font-size: clamp(3rem, 15vw, 5rem); }
+
+      .proof-logos { flex-wrap: wrap; }
+      .proof-logo { font-size: 0.75rem; }
+
+      .section-label { font-size: 0.7rem; }
+
+      .article-card h3 { font-size: 1rem; }
+      .article-card p { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">
+      <svg class="nav-logo-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="22" stroke="#F4A261" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M14 30 L14 22 L19 26 L24 18 L29 26 L34 22 L34 30 Z" fill="#F4A261"/>
+        <circle cx="24" cy="14" r="2.5" fill="#E63946"/>
+      </svg>
+      <span class="nav-logo-text">Ministry of Single</span>
+    </a>
+    <button class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#manifesto">Manifesto</a></li>
+      <li><a href="#ecosystem">Ecosystem</a></li>
+      <li><a href="#content">Content</a></li>
+      <li><a href="#join">Join</a></li>
+      <li><a class="nav-cta" href="#join">รับ Manifesto ฟรี</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO (2-column: text + image) -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span></span>The Ministry Has Spoken</div>
+      <h1 class="hero-title">
+        <span class="line-block">โสดไม่ใช่</span>
+        <span class="line-block">ห้องรอ</span>
+        <span class="line-block"><em>มันคือจุดหมาย</em></span>
+      </h1>
+      <p class="hero-subtitle">
+        Ministry of Single คือ ecosystem สำหรับคนโสดที่ใช้ชีวิตเต็มที่<br>
+        Content · Community · Deals · Events — ที่เดียวที่เข้าใจคุณจริงๆ
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#join">รับ Manifesto ฟรี</a>
+        <a class="btn-secondary" href="#manifesto">อ่าน Manifesto</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-image-wrapper">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Confident solo lifestyle" loading="eager" />
+        <div class="hero-image-tag">Solo & Proud</div>
+        <div class="hero-image-caption">"เพราะชีวิตที่ดีที่สุด ไม่จำเป็นต้องมีคู่"</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS TICKER -->
+  <div class="stats-bar">
+    <div class="ticker-track" id="ticker">
+      <div class="ticker-item"><span class="ticker-num">10M+</span><span class="ticker-label">คนโสดในไทย</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">42%</span><span class="ticker-label">คนรุ่นใหม่เลือกโสด</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">3x</span><span class="ticker-label">Solo travel เติบโตใน 5 ปี</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">4 Domains</span><span class="ticker-label">Single Ecosystem</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">Single Economy</span><span class="ticker-label">กำลังเปลี่ยนโลก</span></div>
+      <div class="ticker-dot"></div>
+      <!-- Duplicate for infinite loop -->
+      <div class="ticker-item"><span class="ticker-num">10M+</span><span class="ticker-label">คนโสดในไทย</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">42%</span><span class="ticker-label">คนรุ่นใหม่เลือกโสด</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">3x</span><span class="ticker-label">Solo travel เติบโตใน 5 ปี</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">4 Domains</span><span class="ticker-label">Single Ecosystem</span></div>
+      <div class="ticker-dot"></div>
+      <div class="ticker-item"><span class="ticker-num">Single Economy</span><span class="ticker-label">กำลังเปลี่ยนโลก</span></div>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto reveal" id="manifesto">
+    <div class="section-label">Our Manifesto</div>
+    <div class="manifesto-text">
+      <p>คนโสดถูกมองว่ากำลัง<span class="highlight">รอบางอย่าง</span><br>
+      รอใคร รอเวลา รอให้ชีวิต "เริ่มต้น"</p>
+      <p>แต่เราไม่เชื่อแบบนั้น</p>
+      <p>คนโสดกำลังเพิ่มขึ้นทุกปี<br>
+      ไม่ใช่เพราะล้มเหลว<br>
+      ไม่ใช่เพราะยังหาไม่เจอ<br>
+      แต่เพราะพวกเขา <span class="highlight">เลือก</span></p>
+      <p>เราสร้าง Ministry of Single<br>
+      เพื่อคนที่รู้ว่า<span class="highlight"> ตอนนี้ — พวกเขาสมบูรณ์แล้ว</span></p>
+    </div>
+    <div class="manifesto-sign">The Ministry of Single</div>
+  </section>
+
+  <!-- FULL-BLEED IMAGE BREAK -->
+  <div class="image-break reveal">
+    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80" alt="Solo travel lifestyle" loading="lazy" />
+    <div class="image-break-text">
+      <div class="image-break-quote">"เดินทางคนเดียว ไม่ได้แปลว่าเหงา มันแปลว่าอิสระ"</div>
+      <div class="image-break-attr">— From the Ministry</div>
+    </div>
+  </div>
+
+  <!-- ECOSYSTEM -->
+  <section class="ecosystem reveal" id="ecosystem">
+    <div class="ecosystem-header">
+      <h2 class="ecosystem-title">The Single<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--gold)">Ecosystem</em></h2>
+      <p class="ecosystem-sub">ทุก property เชื่อมกันอยู่<br>One ecosystem. Three platforms. Built for singles.</p>
+    </div>
+    <div class="ecosystem-grid">
+      <a class="eco-card" href="https://ministryofsingle.com">
+        <div class="eco-card-img"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80" alt="" loading="lazy" /></div>
+        <div>
+          <div class="eco-num">01</div>
+          <div class="eco-domain">ministryofsingle.com</div>
+          <div class="eco-name">Ministry of Single</div>
+          <div class="eco-desc">HQ · Brand · Media · Thought Leadership<br>ศูนย์กลางของ ecosystem ทั้งหมด</div>
+        </div>
+        <div class="eco-arrow">You are here →</div>
+      </a>
+      <a class="eco-card" href="https://whatsinglewant.com">
+        <div class="eco-card-img"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80" alt="" loading="lazy" /></div>
+        <div>
+          <div class="eco-num">02</div>
+          <div class="eco-domain">whatsinglewant.com</div>
+          <div class="eco-name">What Single Want</div>
+          <div class="eco-desc">Insight · Content · Deals · Marketplace<br>Daily utility hub สำหรับคนโสด</div>
+        </div>
+        <div class="eco-arrow">Explore →</div>
+      </a>
+      <a class="eco-card" href="https://singleexpo.com">
+        <div class="eco-card-img"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80" alt="" loading="lazy" /></div>
+        <div>
+          <div class="eco-num">03</div>
+          <div class="eco-domain">singleexpo.com</div>
+          <div class="eco-name">Single Expo</div>
+          <div class="eco-desc">Events · Expo · Community<br>Flagship event ของคนโสดไทย</div>
+        </div>
+        <div class="eco-arrow">See Event →</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <div class="social-proof reveal">
+    <div class="proof-label">As Featured In · Coming Soon</div>
+    <div class="proof-logos">
+      <div class="proof-logo">The Standard</div>
+      <div class="proof-logo">Workpoint</div>
+      <div class="proof-logo">a]day</div>
+      <div class="proof-logo">The Matter</div>
+      <div class="proof-logo">BrandAge</div>
+      <div class="proof-logo">MarketingOops</div>
+    </div>
+  </div>
+
+  <!-- CONTENT PREVIEW -->
+  <section class="content-section reveal" id="content">
+    <div class="content-header">
+      <h2 class="content-title">From<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--gold)">the Ministry</em></h2>
+      <a class="see-all" href="#">All Articles →</a>
+    </div>
+    <div class="articles-layout">
+      <a class="article-card featured" href="#">
+        <img class="article-img" src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&q=80" alt="Solo lifestyle" loading="lazy" />
+        <div class="article-body">
+          <div class="article-cat">Manifesto</div>
+          <div class="article-title">ทำไมคนโสดถึงไม่ใช่คนที่ยังหาคู่ไม่ได้ — และทำไมเราถึงเชื่อแบบนั้น</div>
+          <div class="article-meta">Ministry of Single · Feature</div>
+        </div>
+      </a>
+      <a class="article-card" href="#">
+        <img class="article-img" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80" alt="Solo travel" loading="lazy" />
+        <div class="article-body">
+          <div class="article-cat">Solo Travel</div>
+          <div class="article-title">เริ่มเดินทางคนเดียวครั้งแรก ไม่ต้องกลัว</div>
+          <div class="article-meta">Travel · 5 min read</div>
+        </div>
+      </a>
+      <a class="article-card" href="#">
+        <img class="article-img" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80" alt="Personal finance" loading="lazy" />
+        <div class="article-body">
+          <div class="article-cat">Money</div>
+          <div class="article-title">คนโสดบริหารเงินยังไงให้รวยเร็วกว่า</div>
+          <div class="article-meta">Finance · 4 min read</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- SINGLE STAT (Shareable section) -->
+  <section class="stat-highlight reveal">
+    <div class="stat-card">
+      <div class="stat-label">Single Stat of the Day</div>
+      <div class="stat-number">42%</div>
+      <div class="stat-desc">ของคนไทยอายุ 25-39 ปี เลือกที่จะโสดอยู่คนเดียว — ไม่ใช่เพราะหาไม่เจอ แต่เพราะเลือกที่จะไม่หา</div>
+      <div class="stat-source">Source: National Statistical Office of Thailand, 2024</div>
+      <button class="share-btn" onclick="sharestat()">📤 Share This Stat</button>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section class="join-section reveal" id="join">
+    <div class="join-label">Join the Ministry</div>
+    <h2 class="join-title">This is your<br><em>government now</em></h2>
+    <p class="join-value">เข้าร่วมฟรี รับ Manifesto ฉบับเต็ม และ exclusive content จาก Single Ecosystem ก่อนใคร</p>
+    <div class="join-perks">
+      <span class="join-perk">Manifesto PDF สวยๆ</span>
+      <span class="join-perk">Weekly insights</span>
+      <span class="join-perk">Deals & Perks</span>
+      <span class="join-perk">Event early access</span>
+    </div>
+    <div class="join-form">
+      <input class="join-input" type="email" placeholder="อีเมลของคุณ" />
+      <button class="join-btn">รับ Manifesto</button>
+    </div>
+    <p class="join-note">ฟรีตลอด · ไม่มีสแปม · ออกได้ตลอดเวลา</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 30 L14 22 L19 26 L24 18 L29 26 L34 22 L34 30 Z" fill="#F4A261"/>
+          <circle cx="24" cy="14" r="2.5" fill="#E63946"/>
+        </svg>
+        <span class="footer-logo-text">Ministry of Single</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://whatsinglewant.com">What Single Want</a></li>
+        <li><a href="https://singleexpo.com">Single Expo</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="footer-copy">© 2026 Ministry of Single · Part of Single Ecosystem</div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) el.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Floating nav
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Hamburger
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Join form
+    document.querySelector('.join-btn').addEventListener('click', () => {
+      const input = document.querySelector('.join-input');
+      if (input.value && input.value.includes('@')) {
+        input.value = '';
+        input.placeholder = '✓ ยินดีต้อนรับสู่ Ministry!';
+        input.style.borderColor = 'var(--gold)';
+        setTimeout(() => { input.placeholder = 'อีเมลของคุณ'; input.style.borderColor = ''; }, 3000);
+      } else {
+        input.style.borderColor = 'var(--accent-red)';
+        input.placeholder = 'กรุณากรอกอีเมลที่ถูกต้อง';
+      }
+    });
+
+    // Share stat
+    function sharestat() {
+      const text = '42% ของคนไทยอายุ 25-39 ปี เลือกที่จะโสดอยู่คนเดียว\n\n#MinistryOfSingle #SingleEconomy\nministryofsingle.com';
+      if (navigator.share) {
+        navigator.share({ title: 'Single Stat of the Day', text: text });
+      } else {
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.querySelector('.share-btn');
+          btn.textContent = '✓ Copied!';
+          setTimeout(() => { btn.innerHTML = '📤 Share This Stat'; }, 2000);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
