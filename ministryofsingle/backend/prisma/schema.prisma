@@ -1,0 +1,101 @@
+// prisma/schema.prisma
+// ministryofsingle.com — Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users / Members ──────────────────────────────────────────
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String?
+  displayName  String
+  avatar       String?
+  bio          String?
+
+  singleStatus String    @default("content") // thriving | content | searching
+  gender       String?
+  ageGroup     String?
+  province     String?
+
+  role         String    @default("member") // member | admin | editor
+  isVerified   Boolean   @default(false)
+
+  savedArticles SavedArticle[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+// ─── Authors ──────────────────────────────────────────────────
+
+model Author {
+  id       String    @id @default(cuid())
+  name     String
+  avatar   String?
+  bio      String?
+  title    String?
+  articles Article[]
+
+  @@map("authors")
+}
+
+// ─── Articles ─────────────────────────────────────────────────
+
+model Article {
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  title              String
+  excerpt            String
+  body               String   @db.Text
+  coverImage         String?
+  category           String   // lifestyle | finance | travel | career | wellness | community | sponsored
+  tags               String[] @default([])
+  readingTimeMinutes Int      @default(5)
+  viewCount          Int      @default(0)
+  isPublished        Boolean  @default(false)
+  isFeatured         Boolean  @default(false)
+  sponsored          Boolean  @default(false)
+  sponsorName        String?
+  publishedAt        DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  author   Author @relation(fields: [authorId], references: [id])
+  authorId String
+
+  savedBy SavedArticle[]
+
+  @@map("articles")
+}
+
+model SavedArticle {
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+  savedAt   DateTime @default(now())
+
+  @@id([userId, articleId])
+  @@map("saved_articles")
+}
+
+// ─── Newsletter ───────────────────────────────────────────────
+
+model NewsletterSubscriber {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  isActive    Boolean  @default(true)
+  source      String?  // homepage | article | popup
+  subscribedAt DateTime @default(now())
+
+  @@map("newsletter_subscribers")
+}
